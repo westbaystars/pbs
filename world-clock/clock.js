@@ -1,3 +1,7 @@
+/*
+   This module is based on the wonderful tutorial by Eric S. Bullington at
+   https://www.ericbullington.com/blog/2012/10/27/d3-oclock/
+*/
 
 /* Get the current time and place into a D3 friendly data structure */
 var fields = function() {
