@@ -10,19 +10,65 @@
 
 	<!-- Include Font Awesome 5 -->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-</head>
+
+	<!-- Make moment and moment-timezone available -->
+	<script src="../assets/moment.js"></script>
+	<script src="../assets/moment-timezone-with-data.js"></script></head>
 <body>
-  <div class="card" style="width: 18rem;">
-    <div class="card-body">
-      <h5>World Clock</h5>
-      <!-- This is where we're going to insert the clock for this card via D3. -->
-      <div class="clock"></div>
-    </div>
-  </div>
+	<main class="container-fluid mt-3">
+		<div class="row">
+			<div class="col-12 col-lg-8 col-xl-9 mb-3" id="container">
+				<!--
+				<div class="card" style="width: 18rem;">
+			    <div class="card-body">
+			      <h5>World Clock</h5>
+			      <! This is where we're going to insert the clock for this card via D3. >
+			      <div class="clock"></div>
+			    </div>
+			  </div>
+			-->
+			</div>
+			<div class="col order-lg-first">
+				<div class="row" id="settings">
+					<div class="col-12">
+						<div class="card border-success bg-light">
+							<h2 class="card-header h4 text-success border-success">
+								<i class="fas fa-cogs" aria-hidden> </i> World Clock Settings
+							</h2>
+							<div class="card-body">
+								<form class="form" action="javascript:void(0);" id="settingsForm">
+								<!--
+								  Allow the user to control the following:
+										The timezone the clock shows the current time in.
+										Whether or not the clock shows 12 hour time or 24 hours time.
+										Whether or not the clock shows seconds.
+										Whether or not the clock shows pulsing dividers between the parts of the time.
+								-->
+									<div class="form-group">
+										<input type="checkbox" value="show24Hour" id="show24Hour" checked />
+										<label class="form-check-label" for="show24Hour"> Show 24 Hour Time</label>
+									</div>
+									<div class="form-group">
+										<input type="checkbox" value="showSeconds" id="showSeconds" checked />
+										<label class="form-check-label" for="showSeconds"> Show Seconds</label>
+									</div>
+									<div class="form-group">
+										<input type="checkbox" value="showPulsing" id="pulsing" />
+										<label class="form-check-label" for="pulsing"> Pulsing</label>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
   <!-- For stand-alone environment, download D3js from http://d3js.org/
        and install under your web application's root directory then modify the below src as
        appropriate. -->
   <script src="https://d3js.org/d3.v5.min.js"></script>
   <script src="clock.js"></script>
+	<script src="index.js"></script>
 </body>
 </html>
