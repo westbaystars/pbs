@@ -18,11 +18,12 @@ const zones = {
   },
   data: function() {
     var d = []
+    this.currentTime = new moment().utc();
     this.timeZones.forEach((tz, i) => {
       var m = this.currentTime.tz(tz)
       d.push({
         zone: tz,
-        digits: m.format('HH:mm:ss').split('')
+        digits: (m.format('HH:mm:ss')+((m.hours() < 12)? ';':'<')).split('')
       })
     });
     return d;
@@ -30,23 +31,30 @@ const zones = {
 }
 
 // Draw digits of clock
-var drawDigits = function(svg, data) {
-  var offsetX = offsetY = 0;
-  data.forEach((digit, i) => {
-    var idx = digit.charCodeAt(0) - 48 // ASCII '0' is dec 48; ':' is after '9'
-    if (idx <= 10) {
-      digits[idx](svg, offsetX, offsetY);
-      offsetX += (idx === 10)? 15 : 30;
-    }
+//  (; = AM, < = PM)
+var drawDigits = function(selection) {
+  var i=0;
+  selection.each(d => {
+    var svg = d3.select(selection.nodes()[i])
+    var data = d.digits;
+    var offsetX = offsetY = 0;
+    svg.selectAll('.digit').data([]).exit().remove();
+    data.forEach(digit => {
+      var idx = digit.charCodeAt(0) - 48 // ASCII '0' is dec 48; ':;<' follow after '9'
+      if (idx <= 12) {
+        digits[idx](svg, offsetX, offsetY);
+        offsetX += (idx === 10)? 15 : 30;
+      }
+    });
+    i++;
   });
-
 }
 // Call from clock's container element selection
 var createClock = function(parent) {
   var svg = parent.append('svg')
-    .attr("width", 210) /* 30 x 6 digits + 15 x 2 colons */
-    .attr("height", 50)
-    //.attr("viewBox", "0 0 84 20")
+    .attr("width", 135)
+    .attr("height", 25)
+    .attr("viewBox", "0 0 210 50") // 30 x 6 digits + 15 x 2 colons + 30 x 1 AM/PM
     .attr("class", "clock");
   var defs = svg.append("defs");
   defs.append("path")
@@ -56,9 +64,8 @@ var createClock = function(parent) {
     .attr("id", "hs")
     .attr("d","m0,0 l2.5,2.5 l10.0,0 l2.5,-2.5 l-2.5,-2.5 l-10.0,0 l-2.5,2.5 z");
 
-  var digits = svg.selectAll('.clock-digit').data(parent.data());
-  drawDigits(svg, parent.data()[0].digits)
-
+  parent.selectAll('.card-body svg')
+    .call(drawDigits);
 }
 
 var clockTop = function(g, offsetX, offfsetY) {
@@ -112,7 +119,7 @@ var clockBottom = function(g, offsetX, offfsetY) {
 
 /* All digital clock numbers assume an SVG space of 30 x 50. */
 var clock0 = function(svg, offsetX, offsetY) {
-  var group = svg.append("")
+  var group = svg.append("g")
     .attr("fill","#d00")
     .attr("stroke","#fff")
     .attr("stroke-width","2")
@@ -255,8 +262,34 @@ var clockColon = function(svg, offsetX, offsetY) {
     .attr("transform", "translate("+(offsetX-2.28)+","+(offsetY+17.5)+")")
 }
 
+var clockAM = function(svg, offsetX, offsetY) {
+  var group = svg.append("g")
+    .attr("fill","#d00")
+    .attr("stroke","#fff")
+    .attr("stroke-width", 0.1)
+    .attr("style","text-anchor:end;font-size:20px;font-family:Arial")
+    .attr("class", "digit");
+  group.append("text")
+    .attr("x", offsetX + 30.0)
+    .attr("y", offsetY + 22.5)
+    .text("AM");
+}
+
+var clockPM = function(svg, offsetX, offsetY) {
+  var group = svg.append("g")
+    .attr("fill","#d00")
+    .attr("stroke","#fff")
+    .attr("stroke-width", 0.1)
+    .attr("style","text-anchor:end;font-size:20px;font-family:Arial")
+    .attr("class", "digit");
+  group.append("text")
+    .attr("x", offsetX + 26.6)
+    .attr("y", offsetY + 45.0)
+    .text("PM");
+}
+
 // Clock digit drawing functions
-const digits = [clock0, clock1, clock2, clock3, clock4, clock5, clock6, clock7, clock8, clock9, clockColon];
+const digits = [clock0, clock1, clock2, clock3, clock4, clock5, clock6, clock7, clock8, clock9, clockColon, clockAM, clockPM];
 
 
 

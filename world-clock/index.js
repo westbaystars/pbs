@@ -17,7 +17,9 @@ function createCard(enter) {
 
 function updateCard(update) {
   update.selectAll('.card-header')
-    .text(d => d);
+    .text(d => d.zone);
+  update.selectAll('.card-body svg')
+    .call(drawDigits);
 }
 
 function render(data) {
@@ -29,7 +31,7 @@ function render(data) {
         createCard(enter);
         // Make sure data is propogated to children
         container.selectAll('.time-card').data(data).select('h2');
-        container.selectAll('.time-card').data(data).select('div')
+        container.selectAll('.time-card').data(data).select('div svg')
       },
       update => updateCard(update),
       exit => exit.remove()
@@ -42,9 +44,7 @@ function render(data) {
   //  .call(digitalClock);
 }
 
-/*
 setInterval(function() {
   var data = zones.data();
   return render(data);
 }, 1000);
-*/
