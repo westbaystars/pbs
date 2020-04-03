@@ -23,7 +23,12 @@ const zones = {
       var m = this.currentTime.tz(tz)
       d.push({
         zone: tz,
-        digits: (m.format('HH:mm:ss')+((m.hours() < 12)? ';':'<')).split('')
+        digits: (m.format('HH:mm:ss')+((m.hours() < 12)? ';':'<')).split(''),
+        time: [
+          {units: "hours", number: m.hours()},
+          {units: "minutes", number: m.minutes()},
+          {units: "seconds", number: m.seconds()}
+        ]
       })
     });
     return d;
@@ -33,6 +38,9 @@ const zones = {
 // Draw digits of clock
 //  (; = AM, < = PM)
 var drawDigits = function(selection) {
+  // This version of D3 is not working as documented. There is no index variable
+  // passed to each and this is not the current element. Manually tracking the
+  // index and current node.
   var i=0;
   selection.each(d => {
     var svg = d3.select(selection.nodes()[i])
@@ -49,13 +57,14 @@ var drawDigits = function(selection) {
     i++;
   });
 }
+
 // Call from clock's container element selection
-var createClock = function(parent) {
+var createDigitalClock = function(parent) {
   var svg = parent.append('svg')
-    .attr("width", 135)
-    .attr("height", 25)
+    .attr("width", 200)
+    .attr("height", 37)
     .attr("viewBox", "0 0 210 50") // 30 x 6 digits + 15 x 2 colons + 30 x 1 AM/PM
-    .attr("class", "clock");
+    .attr("class", "digital-clock");
   var defs = svg.append("defs");
   defs.append("path")
     .attr("id", "vs")
@@ -64,7 +73,7 @@ var createClock = function(parent) {
     .attr("id", "hs")
     .attr("d","m0,0 l2.5,2.5 l10.0,0 l2.5,-2.5 l-2.5,-2.5 l-10.0,0 l-2.5,2.5 z");
 
-  parent.selectAll('.card-body svg')
+  parent.selectAll('.digital-clock')
     .call(drawDigits);
 }
 
@@ -291,123 +300,100 @@ var clockPM = function(svg, offsetX, offsetY) {
 // Clock digit drawing functions
 const digits = [clock0, clock1, clock2, clock3, clock4, clock5, clock6, clock7, clock8, clock9, clockColon, clockAM, clockPM];
 
+// Define the SVG box, placement of analog clock,
+// and prepare scaling functions for the hands
+const pi = Math.PI;
+const scaleSecs = d3.scaleLinear().domain([0, 59 + 999/1000]).range([0, 2 * pi]);
+const scaleMins = d3.scaleLinear().domain([0, 59 + 59/60]).range([0, 2 * pi]);
+const scaleHours = d3.scaleLinear().domain([0, 11 + 59/60]).range([0, 2 * pi]);
 
+// Draw digits of clock
+var drawHands = function(selection) {
+  // This version of D3 is not working as documented. There is no index variable
+  // passed to each and this is not the current element. Manually tracking the
+  // index and current node.
+  var i=0;
+  selection.each(data => {
+    var group = d3.select(selection.nodes()[i])
+    // Clear drawHands
+    group.selectAll(".clock-hand").remove();
 
-/* Get the current time and place into a D3 friendly data structure *
-var fields = function(tz) {
-  var currentTime, hour, minute, second;
-  currentTime = tz? new moment().tz(tz) : moment().utc()
-  second = currentTime.seconds()
-  minute = currentTime.minutes() // +seconds / 20 for smooth sweep second hand
-  hour = currentTime.hours() + minute / 60
-  return data = [
-    { "unit": "seconds", "numeric": second },
-    { "unit": "minutes", "numeric": minute },
-    { "unit": "hours",   "numeric": hour }
-  ]
+    secondArc = d3.arc()
+      .innerRadius(0)
+      .outerRadius(70)
+      .startAngle(d => scaleSecs(d.number))
+      .endAngle(d => scaleSecs(d.number));
+
+    minuteArc = d3.arc()
+      .innerRadius(0)
+      .outerRadius(70)
+      .startAngle(d => scaleMins(d.number))
+      .endAngle(d => scaleMins(d.number));
+
+    hourArc = d3.arc()
+      .innerRadius(0)
+      .outerRadius(50)
+      .startAngle(d => scaleHours(d.number % 12))
+      .endAngle(d => scaleHours(d.number % 12));
+
+    group.selectAll(".clock-hand")
+      .data(data.time)
+      .enter()
+      .append("path")
+      .attr("d", d => {
+        if (d.units === "seconds") {
+          return secondArc(d);
+        } else if (d.units === "minutes") {
+          return minuteArc(d);
+        } else if (d.units === "hours") {
+          return hourArc(d);
+        }
+      })
+      .attr("class", "clock-hand")
+      .attr("stroke", d => (d.units === "seconds")? "red":"black")
+      .attr("stroke-width", d => {
+        if (d.units === "seconds") {
+          return 2;
+        } else if (d.units === "minutes") {
+          return 3;
+        } else if (d.units === "hours") {
+          return 3;
+        }
+      })
+      .attr("fill", "none");
+
+    i++;
+  });
 }
 
-/* Define the SVG box, placement of clock,
-   and prepare scaling functions for the hands
-*
-var width, height, offSetX, offSetY, pi, scaleSecs, scaleMins, scaleHours;
-width = 200;
-height = 200;
-offSetX = 100;
-offSetY = 100;
+// Initialize SVG canvas and draw static portions of analog clock
+// Call from clock's container element selection
+var createAnalogClock = function(parent) {
+  var svg = parent.append("svg")
+    .attr("width", 200)
+    .attr("height", 200)
+    .attr("class", "analog-clock");
 
-pi = Math.PI;
-scaleSecs = d3.scaleLinear().domain([0, 59 + 999/1000]).range([0, 2 * pi]);
-scaleMins = d3.scaleLinear().domain([0, 59 + 59/60]).range([0, 2 * pi]);
-scaleHours = d3.scaleLinear().domain([0, 11 + 59/60]).range([0, 2 * pi]);
+  var clockGroup = svg.append("g")
+    .attr("class", "clock-group")
+    .attr("transform", "translate(100,100)");
 
-/* Initialize SVG canvas and draw static portions of clock *
-var vis, clockGroup;
-
-vis = d3.selectAll(".clock")
-  .append("svg:svg")
-  .attr("width", width)
-  .attr("height", height);
-
-clockGroup = vis.append("g")
-  .attr("transform", "translate(" + offSetX + "," + offSetY + ")");
-
-clockg.append("svg:circle")
-  .attr("r", 80).attr("fill", "none")
-  .attr("class", "clock outercircle")
-  .attr("stroke", "black")
-  .attr("stroke-width", 2);
-
-clockg.append("svg:circle")
-  .attr("r", 4)
-  .attr("fill", "black")
-  .attr("class", "clock innercircle");
-
-
-/* Renderer takes a time data parameter and binds it to the hands of the clock *
-var render = function(data) {
-
-  var hourArc, minuteArc, secondArc;
-
-  clockGroup.selectAll(".clockhand").remove();
-
-  secondArc = d3.arc()
-    .innerRadius(0)
-    .outerRadius(70)
-    .startAngle(function(d) {
-    return scaleSecs(d.numeric);
-  })
-    .endAngle(function(d) {
-    return scaleSecs(d.numeric);
-  });
-
-  minuteArc = d3.arc()
-    .innerRadius(0)
-    .outerRadius(70)
-    .startAngle(function(d) {
-    return scaleMins(d.numeric);
-  })
-    .endAngle(function(d) {
-    return scaleMins(d.numeric);
-  });
-
-  hourArc = d3.arc()
-    .innerRadius(0)
-    .outerRadius(50)
-    .startAngle(function(d) {
-    return scaleHours(d.numeric % 12);
-  })
-    .endAngle(function(d) {
-    return scaleHours(d.numeric % 12);
-  });
-
-  clockGroup.selectAll(".clockhand")
-    .data(data)
-    .enter()
-    .append("path")
-    .attr("d", function(d) {
-      if (d.unit === "seconds") {
-        return secondArc(d);
-      } else if (d.unit === "minutes") {
-        return minuteArc(d);
-      } else if (d.unit === "hours") {
-        return hourArc(d);
-      }
-    })
-    .attr("class", "clockhand")
+  clockGroup.append("circle")
+    .attr("r", 80).attr("fill", "none")
+    .attr("class", "clock outercircle")
     .attr("stroke", "black")
-    .attr("stroke-width", function(d) {
-      if (d.unit === "seconds") {
-        return 2;
-      } else if (d.unit === "minutes") {
-        return 3;
-      } else if (d.unit === "hours") {
-        return 3;
-      }
-    })
-    .attr("fill", "none");
-};
+    .attr("stroke-width", 2);
 
+  clockGroup.append("circle")
+    .attr("r", 4)
+    .attr("fill", "black")
+    .attr("class", "clock innercircle");
+
+  parent.selectAll('svg.analog-clock g.clock-group')
+    .call(drawHands);
+}
+
+/*
 setInterval(function() {
   var data;
   data = fields();

@@ -12,14 +12,17 @@ function createCard(enter) {
     .text(d => d.zone);
   var body = timeCards.append('div')
     .attr('class', 'card-body');
-  createClock(body);
+  createAnalogClock(body);
+  createDigitalClock(body);
 }
 
 function updateCard(update) {
   update.selectAll('.card-header')
     .text(d => d.zone);
-  update.selectAll('.card-body svg')
+  update.selectAll('.card-body .digital-clock')
     .call(drawDigits);
+  update.selectAll('.card-body .analog-clock .clock-group')
+    .call(drawHands);
 }
 
 function render(data) {
@@ -30,19 +33,16 @@ function render(data) {
       enter => {
         createCard(enter);
         // Make sure data is propogated to children
-        container.selectAll('.time-card').data(data).select('h2');
-        container.selectAll('.time-card').data(data).select('div svg')
+        container.selectAll('.time-card').data(data).select('.card-header');
+        container.selectAll('.time-card').data(data).select('.card-body .digital-clock');
+        container.selectAll('.time-card').data(data).select('.card-body .analog-clock .clock-group');
       },
       update => updateCard(update),
       exit => exit.remove()
     );
-
-  // Update time card headers
-  //d3.selectAll('.time-card .card-header')
-  //  .text(d => d.zone)
-  //d3.selectAll('.time-card .card-body')
-  //  .call(digitalClock);
 }
+
+//render(zones.data());
 
 setInterval(function() {
   var data = zones.data();
