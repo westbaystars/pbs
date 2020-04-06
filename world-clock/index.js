@@ -19,6 +19,7 @@ const settings = {
     var timeFormat = '' + (this.show24? 'HH':'h') + ':mm' + (this.showSeconds? ':ss':'') + (this.show24?  '':'A');
 
     this.currentTime = new moment().utc();
+    this.pulseLevel = ((this.currentTime.seconds() % 4) * 30);
     this.timeZones.forEach((tz, i) => {
       var m = this.currentTime.tz(tz)
       d.push({
@@ -63,6 +64,11 @@ function updateCard(update) {
     .call(aClockDrawHands);
   update.selectAll('.card-body .digital-clock')
     .call(dClockDrawDigits);
+  if (settings.showPulsing) {
+    d3.selectAll('.pulsing')
+      .transition()
+      .style("opacity", settings.pulseLevel);
+  }
 }
 
 function render(data) {
@@ -88,3 +94,11 @@ setInterval(function() {
   var data = settings.data();
   return render(data);
 }, 1000);
+
+setInterval(function() {
+  if (settings.showPulsing) {
+    d3.selectAll('.pulsing')
+    .transition()
+    .style("opacity", settings.pulseLevel);
+  }
+}, 2000)
