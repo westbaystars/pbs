@@ -42,6 +42,8 @@ function dClockDrawDigits(selection) {
         offsetX += (idx === 10)? 15 : 30;
       }
     });
+    // Move the clock right by half the remaining space available
+    svg.attr('transform','translate('+((250-offsetX)/2)+',0)');
     i++;
   });
 }
@@ -231,7 +233,7 @@ var clockColon = function(svg, offsetX, offsetY) {
     .attr("fill","#d00")
     .attr("stroke","#fff")
     .attr("stroke-width","2")
-    .attr("class", "digit");
+    .attr("class", "digit pulsing");
   group.append("path")
     .attr("d", "m 12.5,17.5 a 3.86,3.78 0 1 1 0,-.01z")
     .attr("transform", "translate("+offsetX+","+offsetY+")")
