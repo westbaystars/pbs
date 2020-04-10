@@ -102,7 +102,12 @@ function updateDigitalClock(update) {
   // Skip this if not in update phase
   if (update.data().length === 0) return;
   
-  drawDigits(update.select('svg.digital-clock'), update.datum().digits);
+  // Draw the digits for each node instance onto the child's SVG canvas
+  update.nodes().forEach(node => {
+    var container = d3.select(node);
+    var data = container.datum().digits;
+    drawDigits(container.select('svg.digital-clock'), data);
+  })
 }
 
 var ledTop = function(g, offsetX, offsetY) {
