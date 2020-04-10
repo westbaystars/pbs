@@ -67,8 +67,8 @@ function createCard(enter) {
     .text(d => d.zone);
   var body = timeCards.append('div')
     .attr('class', 'card-body');
-  aClockCreate(body, 200);
-  createDigitalClock(body, data.digits, 200);
+  analogClock.create(body, data.time, 200);
+  digitalClock.create(body, data.digits, 200);
 }
 
 function updateCard(update) {
@@ -76,7 +76,7 @@ function updateCard(update) {
     .text(d => d.zone);
   update.selectAll('.card-body .analog-clock .clock-group')
     .call(aClockDrawHands);
-  update.call(updateDigitalClock);
+  update.call(digitalClock.update);
   if (settings.showPulsing) {
     d3.selectAll('.pulsable')
       .transition()
