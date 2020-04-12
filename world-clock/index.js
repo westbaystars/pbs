@@ -90,8 +90,8 @@ function render(data) {
   cards.exit().remove();
 }
 
-render(settings.data());
-/*
+//render(settings.data());
+
 setInterval(function() {
   var data = settings.data();
   return render(data);
@@ -107,4 +107,4 @@ setInterval(function() {
     .style("opacity", pulseLevel);
   }
 }, 500)
-*/
+
