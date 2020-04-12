@@ -129,7 +129,7 @@ function WorldTimezoneMap() {
   
   //d3.select(self.frameElement).style("height", height + "px");
   
-  d3.json("/assets/timezones.json", function(error, timezones) {
+  d3.json("../assets/timezones.json", function(error, timezones) {
     console.log(error);
     path.projection(null);
   
