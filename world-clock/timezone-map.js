@@ -98,41 +98,39 @@ function WorldTimezoneMap() {
     .attr("class", "tooltip");
   
   var width = 960,
-      height = 960;
+      height = 800,
+      displayWidth=480,
+      displayHeight=400;
   
   var projection = d3.geoMercator()
-      //.center([0, 5])
       .scale(width / 2 / π)
-      //.rotate([-180, 0])
       .translate([width / 2, height / 2])
       .precision(.1);
   
-  var path = d3.geoPath().projection(projection);
+  var path = d3.geoPath(projection);
   
   var graticule = d3.geoGraticule();
   
   var svg = d3.select("body").append("svg")
-      .attr("width", width)
-      .attr("height", height);
+      .attr("width", displayWidth)
+      .attr("height", displayHeight)
+      .attr("viewBox", "0 0 "+width+" "+height);
   
   //var night = svg.append("path")
   //    .attr("class", "night")
   //    .attr("d", path);
   //
   //night.datum(circle.origin(antipode(solarPosition(new Date(nownow))))).attr("d", path);
-  /*
+  
   svg.append("path")
       .datum(graticule)
       .attr("class", "graticule")
       .attr("d", path);
-  */
-//  d3.select(self.frameElement).style("height", height + "px");
+  
+  //d3.select(self.frameElement).style("height", height + "px");
   
   d3.json("/assets/timezones.json", function(error, timezones) {
     console.log(error);
-    svg.append("path")
-      .attr("d", path(timezones));
-      /*
     path.projection(null);
   
     svg.insert("path", ".graticule")
@@ -153,7 +151,6 @@ function WorldTimezoneMap() {
         .on("click", select)
         .on("mousemove", onhover)
         .on("mouseout", onout);
-    */
   });
   
   
