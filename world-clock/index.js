@@ -53,50 +53,45 @@ settings.init();
 
 var container = d3.select('#container');
 
-function createCard(enter) {
-  // Don't do anything if there is no data attached to the enter object (already created)
-  if (enter.data().length === 0) return;
-  
-  var data = enter.datum();
-  var timeCards = enter.append('div')
+function createCards(selection) {
+  var enter = selection.enter()
+    .append('div')
       .attr('class','card time-card')
       .style('width','15rem')
-  timeCards.append('h2')
+  
+  enter.append('h2')
     .attr("class", "card-header h4 text-primary border-primary")
     .text(d => d.zone);
-  var body = timeCards.append('div')
+  
+  var body = enter.append('div')
     .attr('class', 'card-body');
-  analogClock.create(body, data.time, 200);
-  digitalClock.create(body, data.digits, 200);
+    
+  // Only create clocks if enter-ing
+  if (enter.size() > 0) {
+    analogClock.create(body, enter.datum().time, 200);
+    digitalClock.create(body, enter.datum().digits, 200);
+  }
 }
 
-function updateCard(update) {
+function updateCards(update) {
   update.selectAll('.card-header')
     .text(d => d.zone);
-  update.selectAll('.card-body .analog-clock .clock-group')
-    .call(aClockDrawHands);
+  update.call(analogClock.update);
   update.call(digitalClock.update);
 }
 
 function render(data) {
   // Select all cards, assigning data
   var cards = container.selectAll('.time-card')
-    .data(data)
-    .join(
-      enter => {
-        createCard(enter);
-        // Make sure data is propogated to children
-        container.selectAll('.time-card').data(data).select('.card-header');
-        container.selectAll('.time-card').data(data).select('.card-body .analog-clock .clock-group');
-        //container.selectAll('.time-card').data(data).select('.card-body .digital-clock');
-      },
-      update => updateCard(update),
-      exit => exit.remove()
-    );
+    .data(data);
+    
+  createCards(cards); // Enter
+  updateCards(cards); // Update
+  cards.exit().remove();
 }
 
-//render(settings.data());
-
+render(settings.data());
+/*
 setInterval(function() {
   var data = settings.data();
   return render(data);
@@ -112,4 +107,4 @@ setInterval(function() {
     .style("opacity", pulseLevel);
   }
 }, 500)
-
+*/

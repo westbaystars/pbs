@@ -7,8 +7,8 @@ function DigitalClock() {
   var _width = 250;   // 30 x 6 digits + 15 x 2 colons + 30 x 1 AM/PM indicator
   var _height = 50;
   
-  enterDigits = function(enter) {
-    var g = enter.append("g")
+  enterDigits = function(groups) {
+    var digitGroups = groups.enter().append("g")
       .attr("fill","#d00")
       .attr("stroke","#fff")
       .attr("stroke-width","2")
@@ -19,12 +19,11 @@ function DigitalClock() {
     // Because the digits are drawn as a set of functions rather than a single append,
     // we have to kind of bruite force the initial drawing of the digits by getting the
     // nodes, converting them back to a D3 selection, and using the data from there.
-    g.nodes().forEach(g => {
-      var g = d3.select(g);
-      var ledIndex = g.datum().digit.charCodeAt(0) - 48 // ASCII of "0" is dec 48; {:;<} follow after "9"
-      var offsetX = g.datum().x;
-      g.classed('pulsable',ledIndex === 10)             // Reset if pulsible only for :
-      DIGITS[ledIndex](g, offsetX, 0);                  // Call LED digit drawing function for current datum index
+    digitGroups.each((d,i,g) => {
+      var group = d3.select(g[i]);
+      var ledIndex = d.digit.charCodeAt(0) - 48 // ASCII of "0" is dec 48; {:;<} follow after "9"
+      group.classed('pulsable',ledIndex === 10)         // Reset if pulsible only for :
+      DIGITS[ledIndex](group, d.x, 0);                  // Call LED digit drawing function for current datum index
     });
   }
   
@@ -100,13 +99,13 @@ function DigitalClock() {
       .map(d => { data.push({ digit: d, x: offsetX }); offsetX += (d === ':')? 15:30; }); // Colon is 15 units wide, otherwise 30
     
     // Select all digital clocks for updating
-    svg.selectAll('g.digit')
-      .data(data)
-      .join(
-        enter => enterDigits(enter),
-        update => updateDigits(update),
-        exit => exit.remove()
-      )
+    var groups = svg.selectAll('g.digit')
+      .data(data);
+      
+    enterDigits(groups)  // enter
+    updateDigits(groups) // update
+    groups.exit().remove()
+    
     // Center the clock within the SVG canvas
     svg.attr('transform','translate('+((250-offsetX)/2)+',0)');
   }

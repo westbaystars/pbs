@@ -4,12 +4,12 @@
 */
 
 function AnalogClock() {
-  const pi = Math.PI;     // Convience variable for PI
+  const π = Math.PI;     // Convience variable for PI
   
   // Functions for scaling clock hands
-  var scaleSecs = d3.scaleLinear().domain([0, 59 + 999/1000]).range([0, 2 * pi]);
-  var scaleMins = d3.scaleLinear().domain([0, 59 + 59/60]).range([0, 2 * pi]);
-  var scaleHours = d3.scaleLinear().domain([0, 11 + 59/60]).range([0, 2 * pi]);
+  var scaleSecs = d3.scaleLinear().domain([0, 59 + 999/1000]).range([0, 2 * π]);
+  var scaleMins = d3.scaleLinear().domain([0, 59 + 59/60]).range([0, 2 * π]);
+  var scaleHours = d3.scaleLinear().domain([0, 11 + 59/60]).range([0, 2 * π]);
   var labelScale = d3.scaleLinear().domain([0,60,5]).range([0, 360]);
   
   var _width = 200;    // Width (and height) for insernal use within the SVG canvas
@@ -55,8 +55,11 @@ function AnalogClock() {
       .attr("fill", "black")
       .attr("class", "clock innercircle");
   
-    svg.selectAll('g.clock-group')
-      .call(aClockDrawHands);
+    parent.call(aClockDrawHands);
+  }
+  
+  update = function(parent) {
+    parent.call(aClockDrawHands);
   }
 
   /* Analog clock constructor
@@ -68,13 +71,10 @@ function AnalogClock() {
   //   @clock is the component that contains a data structure with a time property
   //     which is an array of three units (hours, minutes, seconds) with assoiated
   //     numbers. Will not display any hands that are not included.
-  aClockDrawHands = function(clock) {
-    // D3.v5 is not working as documented. There is no index variable passed
-    // to each(d, i) and "this" is not the current element.
-    // Manually tracking the index and current node as a work around.
-    var i=0;
-    clock.each(data => {
-      var group = d3.select(clock.nodes()[i])
+  aClockDrawHands = function(containers) {
+    containers.each((data, i, clocks) => {
+      var group = d3.select(clocks[i]).selectAll("svg.analog-clock g.clock-group");
+      
       // Clear drawHands
       group.selectAll(".clock-hand").remove();
   
@@ -121,13 +121,12 @@ function AnalogClock() {
           }
         })
         .attr("fill", "none");
-  
-      i++;
     });
   }
   
   return {
-    create: create
+    create: create,
+    update: update
   }
 }
 
