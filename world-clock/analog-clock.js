@@ -3,30 +3,28 @@
    https://www.ericbullington.com/blog/2012/10/27/d3-oclock/
 */
 
-const pi = Math.PI;     // Convience variable for PI
-
-// Functions for scaling clock hands
-var scaleSecs = d3.scaleLinear().domain([0, 59 + 999/1000]).range([0, 2 * pi]);
-var scaleMins = d3.scaleLinear().domain([0, 59 + 59/60]).range([0, 2 * pi]);
-var scaleHours = d3.scaleLinear().domain([0, 11 + 59/60]).range([0, 2 * pi]);
-var labelScale = d3.scaleLinear().domain([0,60,5]).range([0, 360]);
-
-class AnalogClock {
-  constructor() {
-    this._width = 200;    // Width (and height) for insernal use within the SVG canvas
-  }
+function AnalogClock() {
+  const pi = Math.PI;     // Convience variable for PI
   
-  create(parent, data, width) {
+  // Functions for scaling clock hands
+  var scaleSecs = d3.scaleLinear().domain([0, 59 + 999/1000]).range([0, 2 * pi]);
+  var scaleMins = d3.scaleLinear().domain([0, 59 + 59/60]).range([0, 2 * pi]);
+  var scaleHours = d3.scaleLinear().domain([0, 11 + 59/60]).range([0, 2 * pi]);
+  var labelScale = d3.scaleLinear().domain([0,60,5]).range([0, 360]);
+  
+  var _width = 200;    // Width (and height) for insernal use within the SVG canvas
+  
+  create = function(parent, data, width) {
     var svg = parent.append('div').append("svg")
       .attr("width", width)
       .attr("height", width)
-      .attr("viewBox", "0 0 "+this._width+" "+this._width) // Inernal coordinate system
+      .attr("viewBox", "0 0 "+_width+" "+_width) // Inernal coordinate system
       .attr("class", "analog-clock");
   
     // Group to hold the clock face
     var clockGroup = svg.append("g")
       .attr("class", "clock-group")
-      .attr("transform", "translate("+this._width/2+" "+this._width/2+")");
+      .attr("transform", "translate("+_width/2+" "+_width/2+")");
   
     // Outer circle
     clockGroup.append("circle")
@@ -61,72 +59,76 @@ class AnalogClock {
       .call(aClockDrawHands);
   }
 
+  /* Analog clock constructor
+       @parent - A D3 selection
+       @data - An array of {unit: "...", number: ###} pairs for hours, minutes, and optionally seconds
+       @width - The physical screen width for the analog clock
+  */
+  // Draw hands of an analog clock
+  //   @clock is the component that contains a data structure with a time property
+  //     which is an array of three units (hours, minutes, seconds) with assoiated
+  //     numbers. Will not display any hands that are not included.
+  aClockDrawHands = function(clock) {
+    // D3.v5 is not working as documented. There is no index variable passed
+    // to each(d, i) and "this" is not the current element.
+    // Manually tracking the index and current node as a work around.
+    var i=0;
+    clock.each(data => {
+      var group = d3.select(clock.nodes()[i])
+      // Clear drawHands
+      group.selectAll(".clock-hand").remove();
+  
+      secondArc = d3.arc()
+        .innerRadius(0)
+        .outerRadius(70)
+        .startAngle(d => scaleSecs(d.number))
+        .endAngle(d => scaleSecs(d.number));
+  
+      minuteArc = d3.arc()
+        .innerRadius(0)
+        .outerRadius(70)
+        .startAngle(d => scaleMins(d.number))
+        .endAngle(d => scaleMins(d.number));
+  
+      hourArc = d3.arc()
+        .innerRadius(0)
+        .outerRadius(50)
+        .startAngle(d => scaleHours(d.number % 12))
+        .endAngle(d => scaleHours(d.number % 12));
+  
+      group.selectAll(".clock-hand")
+        .data(data.time)
+        .enter()
+        .append("path")
+        .attr("d", d => {
+          if (d.units === "seconds") {
+            return secondArc(d);
+          } else if (d.units === "minutes") {
+            return minuteArc(d);
+          } else if (d.units === "hours") {
+            return hourArc(d);
+          }
+        })
+        .attr("class", "clock-hand")
+        .attr("stroke", d => (d.units === "seconds")? "red":"black")
+        .attr("stroke-width", d => {
+          if (d.units === "seconds") {
+            return 2;
+          } else if (d.units === "minutes") {
+            return 3;
+          } else if (d.units === "hours") {
+            return 3;
+          }
+        })
+        .attr("fill", "none");
+  
+      i++;
+    });
+  }
+  
+  return {
+    create: create
+  }
 }
-/* Analog clock constructor
-     @parent - A D3 selection
-     @data - An array of {unit: "...", number: ###} pairs for hours, minutes, and optionally seconds
-     @width - The physical screen width for the analog clock
-*/
-// Draw hands of an analog clock
-//   @clock is the component that contains a data structure with a time property
-//     which is an array of three units (hours, minutes, seconds) with assoiated
-//     numbers. Will not display any hands that are not included.
-function aClockDrawHands(clock) {
-  // D3.v5 is not working as documented. There is no index variable passed
-  // to each(d, i) and "this" is not the current element.
-  // Manually tracking the index and current node as a work around.
-  var i=0;
-  clock.each(data => {
-    var group = d3.select(clock.nodes()[i])
-    // Clear drawHands
-    group.selectAll(".clock-hand").remove();
 
-    secondArc = d3.arc()
-      .innerRadius(0)
-      .outerRadius(70)
-      .startAngle(d => scaleSecs(d.number))
-      .endAngle(d => scaleSecs(d.number));
-
-    minuteArc = d3.arc()
-      .innerRadius(0)
-      .outerRadius(70)
-      .startAngle(d => scaleMins(d.number))
-      .endAngle(d => scaleMins(d.number));
-
-    hourArc = d3.arc()
-      .innerRadius(0)
-      .outerRadius(50)
-      .startAngle(d => scaleHours(d.number % 12))
-      .endAngle(d => scaleHours(d.number % 12));
-
-    group.selectAll(".clock-hand")
-      .data(data.time)
-      .enter()
-      .append("path")
-      .attr("d", d => {
-        if (d.units === "seconds") {
-          return secondArc(d);
-        } else if (d.units === "minutes") {
-          return minuteArc(d);
-        } else if (d.units === "hours") {
-          return hourArc(d);
-        }
-      })
-      .attr("class", "clock-hand")
-      .attr("stroke", d => (d.units === "seconds")? "red":"black")
-      .attr("stroke-width", d => {
-        if (d.units === "seconds") {
-          return 2;
-        } else if (d.units === "minutes") {
-          return 3;
-        } else if (d.units === "hours") {
-          return 3;
-        }
-      })
-      .attr("fill", "none");
-
-    i++;
-  });
-}
-
-const analogClock = new AnalogClock();
+const analogClock = AnalogClock();
