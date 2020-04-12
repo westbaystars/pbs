@@ -24,7 +24,6 @@ const settings = {
     var timeFormat = '' + (this.show24? 'HH':'h') + ':mm' + (this.showSeconds? ':ss':'') + (this.show24?  '':'A');
 
     this.currentTime = new moment().utc();
-    this.pulseLevel = ((this.currentTime.seconds() % 2) * 1 + .1);  // Opacity goes from 0 to 1 (or more)
     this.timeZones.forEach((tz, i) => {
       var m = this.currentTime.tz(tz)
       d.push({
@@ -77,11 +76,6 @@ function updateCard(update) {
   update.selectAll('.card-body .analog-clock .clock-group')
     .call(aClockDrawHands);
   update.call(digitalClock.update);
-  if (settings.showPulsing) {
-    d3.selectAll('.pulsable')
-      .transition()
-      .style("opacity", settings.pulseLevel);
-  }
 }
 
 function render(data) {
@@ -108,11 +102,14 @@ setInterval(function() {
   return render(data);
 }, 1000);
 
+// Control pulsing effect
+var pulseLevel = 1;
 setInterval(function() {
   if (settings.showPulsing) {
+    pulseLevel = (pulseLevel >= 1)? 0.2:1;
     d3.selectAll('.pulsable')
     .transition()
-    .style("opacity", settings.pulseLevel);
+    .style("opacity", pulseLevel);
   }
-}, 1000)
+}, 500)
 
