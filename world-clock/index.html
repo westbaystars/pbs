@@ -1,88 +1,20 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<meta charset="utf-8" />
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <title>World Clock</title>
 
 	<!-- Include Bootstrap 4 CSS -->
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous" />
+	<link rel="stylesheet" href="../assets/bootstrap.4.2.1.min.css" />
 
-	<!-- Include Font Awesome 5 -->
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
-
+  <!-- Include CSS for the world timezone map -->
+  <link rel="stylesheet" href="timezone-map.css" />
+    
   <style>
-  .graticule {
-    fill: none;
-    stroke: #777;
-    stroke-opacity: .5;
-    stroke-width: .5px;
-    pointer-events: none;
-  }
-  
-  .timezone {
-    stroke-opacity: .5;
-    stroke-width: .5px;
-  }
-  
-  .timezones :hover {
-    opacity: .90;
-    stroke-opacity: 1;
-    stroke-width: 1px;
-  }
-  
-  .boundary {
-    fill: none;
-    stroke: #fff;
-    stroke-width: .5px;
-    pointer-events: none;
-  }
-  
-  div.tooltip  {
-    color: #222;
-    background: #fff;
-    padding: .5em;
-    text-shadow: #f5f5f5 0 1px 0;
-    border-radius: 2px;
-    box-shadow: 0px 0px 2px 0px #a6a6a6;
-    opacity: 0.9;
-    position: absolute;
-  }
-  
-  div.tooltip .sep {
-    color: #444;
-    font-weight: 300;
-  }
-  
-  .hidden {
-    display: none;
-  }
-  
-  .night {
-    /* stroke: steelblue; */
-    fill: steelblue;
-    fill-opacity: .25;
-  }
-  
-  .search {
-    float: right;
-  }
-  
-  .compare {
-    font-family: monospace;
-  }
+    .text-success svg { fill: #28a745; }
   </style>
-
-	<!-- Make moment and moment-timezone available -->
-	<script src="../assets/moment.js"></script>
-	<script src="../assets/moment-timezone-with-data.js"></script>
-	<!-- Other libraries for Timezone Map to work -->
-  <script src="../assets/night.js"></script>
-  <script src="../assets/colorbrewer.js"></script>
-  <script src="../assets/topojson.js"></script>
-  <script src="../assets/lodash.js"></script>
-  <script src="../assets/flatpickr.min.js"></script>
-  <script src="../assets/awesomplete.min.js"></script>
 </head>
 <body>
 	<main class="container-fluid mt-3">
@@ -102,9 +34,7 @@
 				<div class="row" id="settings">
 					<div class="col-12">
 						<div class="card border-success bg-light">
-							<h2 class="card-header h4 text-success border-success">
-								<i class="fas fa-cogs" aria-hidden> </i> World Clock Settings
-							</h2>
+							<h2 class="card-header h4 text-success border-success">World Clock Settings</h2>
 							<div class="card-body">
 								<form class="form" action="javascript:void(0);" id="settingsForm">
 								<!--
@@ -134,12 +64,21 @@
 			</div>
 		</div>
 	</main>
-  <!-- For stand-alone environment, download D3js from http://d3js.org/
-       and install under your web application's root directory then modify the below src as
-       appropriate. -->
-  <script src="https://d3js.org/d3.v4.min.js"></script>
-  <script src="https://d3js.org/d3-array.v1.min.js"></script>
-  <script src="https://d3js.org/d3-geo.v1.min.js"></script>
+  <!-- Make moment and moment-timezone available -->
+  <script src="../assets/moment.js"></script>
+  <script src="../assets/moment-timezone-with-data.js"></script>
+  <!-- Other libraries for Timezone Map to work -->
+  <script src="../assets/night.js"></script>
+  <script src="../assets/colorbrewer.js"></script>
+  <script src="../assets/topojson.js"></script>
+  <script src="../assets/lodash.js"></script>
+  <script src="../assets/flatpickr.min.js"></script>
+  <script src="../assets/awesomplete.min.js"></script>
+  <script src="../assets/d3.v4.min.js"></script>
+  <script src="../assets/d3-array.v1.min.js"></script>
+  <script src="../assets/d3-geo.v1.min.js"></script>
+  <script src="../assets/d3-bootstrap.min.js"></script>
+  <!-- Local libraries for this web app -->
   <script src="digital-clock.js"></script>
 	<script src="analog-clock.js"></script>
   <script src="timezone-map.js"></script>
