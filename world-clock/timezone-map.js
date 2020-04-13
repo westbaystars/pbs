@@ -21,8 +21,8 @@ function WorldTimezoneMap() {
       radians = π / 180,
       degrees = 180 / π;
   
-  //var circle = d3.geoCircle()
-  //    .angle(90);
+  var circle = d3.geoCircle()
+    .precision(90);
   
   // TODO update if open in browser for a long long time?
   var nownow = moment(Date.now());
@@ -47,8 +47,8 @@ function WorldTimezoneMap() {
   // function creates a classname for the offset that
   // a given zonename belongs to (e.g., America/New_York ==> UTC-4)
   function offset_class(zonename) {
-    try {
-      if (moment.tz.zone(zonename)) {
+    if (zonename !== 'uninhabited') try {
+      if (moment.tz(zonename)) {
         minutes = nownow.tz(zonename).utcOffset();
         // momentjs gives offset relative to selected zone, so flip it
         hours = (minutes / 60.0) * -1;
@@ -82,12 +82,12 @@ function WorldTimezoneMap() {
   COLOR_BAD = '#9D4D34';
   COLOR_HIGHLIGHT = '#333';
   
-  // d3.scaleOrdinal([[domain,]range])
-  var colorscale = d3.scaleOrdinal(offsets, colorbrewer.Paired[12]);
+  var colorScale = d3.scaleOrdinal(colorbrewer.Paired[12]);
+  colorScale.domain(offsets);
   
   function colors(d) {
     if (selected.indexOf(d.id) === -1) {
-      return colorscale(offset_class(d.id));
+      return colorScale(offset_class(d.id));
     } else {
       return COLOR_HIGHLIGHT;
     }
@@ -116,11 +116,11 @@ function WorldTimezoneMap() {
       .attr("height", displayHeight)
       .attr("viewBox", "0 0 "+width+" "+height);
   
-  //var night = svg.append("path")
-  //    .attr("class", "night")
-  //    .attr("d", path);
-  //
-  //night.datum(circle.origin(antipode(solarPosition(new Date(nownow))))).attr("d", path);
+  var night = svg.append("path")
+      .attr("class", "night")
+      .attr("d", path);
+  
+  night.datum(circle.center(NIGHT.antiSolarPosition(new Date(nownow)))).attr("d", path);
   
   svg.append("path")
       .datum(graticule)
@@ -130,7 +130,8 @@ function WorldTimezoneMap() {
   //d3.select(self.frameElement).style("height", height + "px");
   
   d3.json("../assets/timezones.json", function(error, timezones) {
-    console.log(error);
+    if (error) console.log(error);
+    
     path.projection(null);
   
     svg.insert("path", ".graticule")
@@ -145,8 +146,8 @@ function WorldTimezoneMap() {
       .enter().append("path")
         .attr("id", function(d) { return d.id.replace(/\//g, ""); })
         .attr("d", path)
-        .attr("fill", function(d) { return colors(d); })
-        .attr("stroke", function(d) { return d3.hsl(colors(d)).darker(2); })
+        .style("fill", function(d) { return colors(d); })
+        .style("stroke", function(d) { return d3.hsl(colors(d)).darker(2); })
         .attr("class", function(d) { return 'timezone ' + offset_class(d.id); })
         .on("click", select)
         .on("mousemove", onhover)
@@ -157,17 +158,17 @@ function WorldTimezoneMap() {
   
   function onhover(d){
     svg.selectAll('.timezone').transition()
-      .attr('opacity', '.4')
-      .attr('fill', '#aaa');
+      .style('opacity', '.4')
+      .style('fill', '#aaa');
     svg.selectAll('.' + offset_class(d.id)).transition()
-      .attr('opacity', '1')
-      .attr('fill', colors(d));
+      .style('opacity', '1')
+      .style('fill', colors(d));
   
     var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
   
     // lookup offset in minutes, transform to hours relative UTC
-    var hours = (nownow.tz(d.id).zone() / 60.0) * -1;
-    var display = d.id + ': UTC' + (hours < 0 ? '' : '+') + hours;
+    var zone = nownow.tz(d.id === 'uninhabited' ? 'UTC' : d.id)
+    var display = d.id + ': UTC' + zone.format('Z');
   
     tooltip
       .classed("hidden", false)
@@ -178,8 +179,8 @@ function WorldTimezoneMap() {
   
   function onout(d){
     svg.selectAll('.timezone').transition()
-        .attr('opacity', '1')
-        .attr('fill', function(p) { return colors(p); });
+        .style('opacity', '1')
+        .style('fill', function(p) { return colors(p); });
   
     tooltip.classed("hidden", true);
   }
@@ -204,8 +205,8 @@ function WorldTimezoneMap() {
       selected.push(d.id);
   
       svg.selectAll('.' + offset_class(d.id)).transition()
-        .attr('opacity', '1')
-        .attr('fill', COLOR_HIGHLIGHT);
+        .style('opacity', '1')
+        .style('fill', COLOR_HIGHLIGHT);
   
   		comparing.push(d);
       localtime = nownow.tz(d.id);
@@ -234,8 +235,8 @@ function WorldTimezoneMap() {
   						 svg.selectAll('.timezone').transition()
   								 .delay(250)
   								 .duration(750)
-  								 .attr('opacity', '1')
-  								 .attr('fill', function(p) { return colors(p); });
+  								 .style('opacity', '1')
+  								 .style('fill', function(p) { return colors(p); });
   
   					  this.input.value = "";
              },
@@ -261,7 +262,7 @@ function WorldTimezoneMap() {
     showtime.html(nownow);
   
     // TODO fix update of nighttime mask
-    // night.datum(circle.origin(antipode(solarPosition(new Date(nownow))))).attr("d", path);
+    // night.datum(circle.origin(NIGHT.antiSolarPosition(new Date(nownow)))).attr("d", path);
   
     compare.html("");
   
