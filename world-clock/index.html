@@ -56,6 +56,9 @@
 										<input type="checkbox" value="showPulsing" id="pulsing" checked />
 										<label class="form-check-label" for="pulsing"> Pulsing</label>
 									</div>
+								  <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#add-time-zone-dialog">
+								    Add Time Zone
+								  </button>
 								</form>
 							</div>
 						</div>
@@ -64,6 +67,23 @@
 			</div>
 		</div>
 	</main>
+  <!-- Modal -->
+  <div class="modal fade" id="add-time-zone-dialog" tabindex="-1" role="dialog" aria-labelledby="add-time-zone-label">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="display:block;">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="add-time-zone-label">Add Time Zone</h4>
+        </div>
+        <div id="time-zone-map" class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+          <button id="add-time-zone" type="button" data-dismiss="modal" class="btn btn-default btn-primary">Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- Make moment and moment-timezone available -->
   <script src="../assets/moment.js"></script>
   <script src="../assets/moment-timezone-with-data.js"></script>
@@ -77,7 +97,8 @@
   <script src="../assets/d3.v4.min.js"></script>
   <script src="../assets/d3-array.v1.min.js"></script>
   <script src="../assets/d3-geo.v1.min.js"></script>
-  <script src="../assets/d3-bootstrap.min.js"></script>
+  <script src="../assets/d3-bootstrap.js"></script>
+  <script src="../assets/d3-bootstrap-extra.js"></script>
   <!-- Local libraries for this web app -->
   <script src="digital-clock.js"></script>
 	<script src="analog-clock.js"></script>

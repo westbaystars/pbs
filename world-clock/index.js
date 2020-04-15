@@ -47,6 +47,13 @@ const settings = {
       d3.selectAll('.pulsable')
         .style("opacity", 1);
      });
+    this.worldMap = WorldTimezoneMap('#time-zone-map', 480);
+    d3.select('#add-time-zone').on('click', () => {
+      var value = d3.select('#time-zone-map input.search').node().value;
+      if (value.length > 0) {
+        settings.addTimeZone(value);
+      }
+    });
   }
 }
 settings.init();

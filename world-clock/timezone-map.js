@@ -16,7 +16,7 @@
   Adopted into stand alone object by Michael Westbay.
 */
 
-function WorldTimezoneMap() {
+function WorldTimezoneMap(mapSelector, displayWidth) {
   var π = Math.PI,
       radians = π / 180,
       degrees = 180 / π;
@@ -27,21 +27,11 @@ function WorldTimezoneMap() {
   // TODO update if open in browser for a long long time?
   var nownow = moment(Date.now());
   
-  var showtime = d3.select("#toolbar")
-    .append("div")
-    .attr("class", "now")
-    .html(nownow.format('ddd DD MMMM YYYY, HH:mm a zz [UTC]Z'));
-  
-  var compare = d3.select("#toolbar")
-    .append("ul")
-    .attr("class", "compare");
-  
-  var comparing = [];
-  
-  var search = d3.select("#toolbar")
+  var search = d3.select("#time-zone-map")
     .append("input")
-    .attr("class", "search")
-    .attr("type", "text");
+    .attr("class", "form-control search")
+    .attr("type", "text")
+    .style('width', displayWidth+'px');
   
   
   // function creates a classname for the offset that
@@ -99,8 +89,7 @@ function WorldTimezoneMap() {
   
   var width = 960,
       height = 800,
-      displayWidth=480,
-      displayHeight=400;
+      displayHeight=displayWidth * 800 / 960;
   
   var projection = d3.geoMercator()
       .scale(width / 2 / π)
@@ -111,7 +100,7 @@ function WorldTimezoneMap() {
   
   var graticule = d3.geoGraticule();
   
-  var svg = d3.select("body").append("svg")
+  var svg = d3.select(mapSelector).append("svg")
       .attr("width", displayWidth)
       .attr("height", displayHeight)
       .attr("viewBox", "0 0 "+width+" "+height);
@@ -198,16 +187,18 @@ function WorldTimezoneMap() {
   
   function select(d){
     if (selected.indexOf(d.id) > -1) {
+      d3.select('input.search').node().value = '';
       selected.splice(d.id, 1);
-      compare.selectAll('.compare-' + d.id.replace(/\//g, '')).remove()
+      //compare.selectAll('.compare-' + d.id.replace(/\//g, '')).remove()
   
     } else {
+      d3.select('input.search').node().value = d.id;
       selected.push(d.id);
   
       svg.selectAll('.' + offset_class(d.id)).transition()
         .style('opacity', '1')
         .style('fill', COLOR_HIGHLIGHT);
-  
+  /*
   		comparing.push(d);
       localtime = nownow.tz(d.id);
   
@@ -216,15 +207,14 @@ function WorldTimezoneMap() {
         .attr('class', 'compare-' + d.id.replace(/\//g, ''))
         .style('color', agony(localtime))
         .html(pad(d.id) + ': '+ localtime.format('ddd DD MMMM YYYY, HH:mm a zz [UTC]Z'));
-  
+  */
     }
   }
   
-  /*
   new Awesomplete(search.node(), {
-  	list: _.map(moment.tz.names(), function(z) {return z.replace(/\//g, "");}),
+  	list: _.map(moment.tz.names(), function(z) {return z/*.replace(/\//g, "")*/;}),
     replace: function(text){
-               var datum = d3.select('#' + text.value).datum();
+               var datum = d3.select('#' + text.value.replace(/\//g,'')).datum();
                select(datum);
   
                this.input.value = text.value;
@@ -238,10 +228,10 @@ function WorldTimezoneMap() {
   								 .style('opacity', '1')
   								 .style('fill', function(p) { return colors(p); });
   
-  					  this.input.value = "";
+  					  //this.input.value = "";
              },
   });
-  */
+  
   function agony(datetime) {
     if (datetime.hour() < 6) {
       return COLOR_BAD;
@@ -263,11 +253,11 @@ function WorldTimezoneMap() {
   
     // TODO fix update of nighttime mask
     // night.datum(circle.origin(NIGHT.antiSolarPosition(new Date(nownow)))).attr("d", path);
-  
+  /*
     compare.html("");
   
     _.each(comparing, function(d){
-    /* TODO DRY this and orig bit from select function */
+    /* TODO DRY this and orig bit from select function * /
     localtime = nownow.tz(d.id);
   
   	compare
@@ -277,6 +267,7 @@ function WorldTimezoneMap() {
       .style('color', agony(localtime))
   		.html(pad(d.id) + ': '+ localtime.format('ddd DD MMMM YYYY, HH:mm a zz [UTC]Z'));
     })
+    */
   }
   
   flatpickr('.flatpickr', {
@@ -287,5 +278,3 @@ function WorldTimezoneMap() {
   return {
   }
 }
-
-const worldTimezoneMap = WorldTimezoneMap();
