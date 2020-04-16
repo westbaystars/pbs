@@ -63,8 +63,9 @@ var container = d3.select('#container');
 function createCards(selection) {
   var enter = selection.enter()
     .append('div')
-      .attr('class','card time-card')
-      .style('width','15rem')
+    .attr('class','col-3 col-lg-3 col-xl-2 mb-3')
+    .append('div')
+      .attr('class','card time-card');
   
   enter.append('h2')
     .attr("class", "card-header h4 text-primary border-primary")
