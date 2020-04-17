@@ -17,7 +17,8 @@ function AnalogClock() {
   create = function(parent, data) {
     var svg = parent.append('div').append("svg")
       .attr("viewBox", "0 0 "+_width+" "+_width) // Inernal coordinate system
-      .attr("class", "analog-clock");
+      .attr("class", "analog-clock")
+      .attr("arai-disabled", "true");
   
     // Group to hold the clock face
     var clockGroup = svg.append("g")

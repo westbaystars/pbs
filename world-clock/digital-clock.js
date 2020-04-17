@@ -55,7 +55,8 @@ function DigitalClock() {
   create = function(parent, digits) {
     var svg = parent.append('div').append('svg')
       .attr("viewBox", "0 0 "+_width+" "+_height)
-      .classed('digital-clock', true);
+      .classed('digital-clock', true)
+      .attr("arai-disabled", "true");
   
     // Define the digital "lit up" element drawing paths (vertical and horizontal)
     var defs = svg.append("defs");

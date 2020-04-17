@@ -33,8 +33,8 @@
 			<div class="col-3 order-lg-first">
 				<div class="row" id="settings">
 					<div class="col-12">
-						<div class="card border-success bg-light">
-							<h2 class="card-header h4 text-success border-success">World Clock Settings</h2>
+						<div class="card border-success bg-light" aria-describedby="wc-settings">
+							<h2 id="wc-settings" class="card-header h4 text-success border-success">World Clock Settings</h2>
 							<div class="card-body">
 								<form class="form" action="javascript:void(0);" id="settingsForm">
 								<!--
@@ -45,18 +45,18 @@
 										Whether or not the clock shows pulsing dividers between the parts of the time.
 								-->
 									<div class="form-group">
-										<input type="checkbox" value="show24Hour" id="show24Hour" />
+										<input type="checkbox" value="show24Hour" id="show24Hour" aria-label="Show time in 12 or 24 hour format."/>
 										<label class="form-check-label" for="show24Hour"> Show 24 Hour Time</label>
 									</div>
 									<div class="form-group">
-										<input type="checkbox" value="showSeconds" id="showSeconds" checked />
+										<input type="checkbox" value="showSeconds" id="showSeconds" aria-label="Show times with or without seconds." checked="checked" />
 										<label class="form-check-label" for="showSeconds"> Show Seconds</label>
 									</div>
 									<div class="form-group">
-										<input type="checkbox" value="showPulsing" id="pulsing" checked />
+									  <input type="checkbox" value="showPulsing" id="pulsing" aria-label="Show pulsing time separator or not." checked="checked" />
 										<label class="form-check-label" for="pulsing"> Pulsing</label>
 									</div>
-								  <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#add-time-zone-dialog">
+								  <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#add-time-zone-dialog" aria-label="Click here to add a new clock for a specific time zone.">
 								    Add Time Zone
 								  </button>
 								</form>
