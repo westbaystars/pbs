@@ -14,10 +14,8 @@ function AnalogClock() {
   
   var _width = 200;    // Width (and height) for insernal use within the SVG canvas
   
-  create = function(parent, data, width) {
+  create = function(parent, data) {
     var svg = parent.append('div').append("svg")
-      .attr("width", width)
-      .attr("height", width)
       .attr("viewBox", "0 0 "+_width+" "+_width) // Inernal coordinate system
       .attr("class", "analog-clock");
   

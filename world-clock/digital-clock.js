@@ -52,11 +52,8 @@ function DigitalClock() {
   // Digital clock contructor
   // @parent - A D3 selection with data property of a String named "digits"
   // @digits - Contains a string of digits, colons, and optional ; or < for AM or PM indicators
-  // @width - The physical screen width for the digital clock
-  create = function(parent, digits, width) {
+  create = function(parent, digits) {
     var svg = parent.append('div').append('svg')
-      .attr("width", width)
-      .attr("height", width/5)
       .attr("viewBox", "0 0 "+_width+" "+_height)
       .classed('digital-clock', true);
   

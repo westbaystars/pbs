@@ -76,8 +76,8 @@ function createCards(selection) {
     
   // Only create clocks if enter-ing
   if (enter.size() > 0) {
-    analogClock.create(body, enter.datum().time, 200);
-    digitalClock.create(body, enter.datum().digits, 200);
+    analogClock.create(body, enter.datum().time);
+    digitalClock.create(body, enter.datum().digits);
   }
 }
 
