@@ -67,10 +67,15 @@ function createCards(selection) {
     .append('div')
       .attr('class','card time-card');
   
-  enter.append('h3')
+  enter.append('h2')
     .attr("class", "card-header h4 text-primary border-primary")
-    .attr('arai-label', d => 'The time at '+d.zone+' is '+d.digits.replace(';',' AM').replace('<',' PM')+'.')
-    .text(d => d.zone);
+    .attr('role', 'landmark')
+    .attr('arai-describedby',d => d.zone+'-zone')
+    .text(d => d.zone)
+    .append('span')
+      .attr('id',d => d.zone+'-zone')
+      .attr('style','position:absolute;top:-500px;')
+      .text(d => 'The time at '+d.zone+' is '+d.digits.replace(';',' AM').replace('<',' PM')+'.');
   
   var body = enter.append('div')
     .attr('class', 'card-body');
@@ -83,12 +88,16 @@ function createCards(selection) {
 }
 
 function updateCards(update) {
-  update.selectAll('h3')
-    .attr('arai-label', (d, i, t) => {
-      data = d3.select(t[i].parentElement).datum();
+  update.selectAll('h2')
+    .text(d => d.zone)
+    .append('span')
+      .attr('style','position:absolute;top:-500px;')
+      .attr('id',d => d.zone+'-zone')
+      .text((d, i, t) => {
+      data = d3.select(t[i].parentElement.parentElement).datum();
       return 'The time at '+data.zone+' is '+data.digits.replace(';',' AM').replace('<',' PM')+'.';
-    })
-    .text(d => d.zone);
+    });
+;
   update.call(analogClock.update);
   update.call(digitalClock.update);
 }
