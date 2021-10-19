@@ -6,12 +6,12 @@ defmodule SleepsToChristmas do
   """
 
   @doc """
-  Hello world.
+  Elixir implementation of Sleeps to Christmas project.
 
-  ## Examples
+  ## To execute:
 
-      iex> SleepsToChristmas.hello()
-      :world
+      iex> SleepsToChristmas.sleeps()
+      67 sleeps 😴 till Christmas 🎄
 
   """
   def sleeps do
