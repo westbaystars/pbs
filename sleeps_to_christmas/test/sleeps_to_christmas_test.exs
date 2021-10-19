@@ -1,8 +1,9 @@
 defmodule SleepsToChristmasTest do
   use ExUnit.Case
-  doctest SleepsToChristmas
+  # doctest SleepsToChristmas
 
-  test "greets the world" do
-    assert SleepsToChristmas.hello() == :world
+  test "days until Christmas" do
+    assert SleepsToChristmas.sleeps()
+    |> String.match?(~r/Christmas/)
   end
 end

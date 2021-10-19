@@ -1,2 +1,2 @@
 #!/bin/bash
-mix run -e "SleepsToChristmas.sleeps()"
+mix run -e "IO.puts(SleepsToChristmas.sleeps())"

@@ -16,12 +16,11 @@ defmodule SleepsToChristmas do
   """
   def sleeps do
     days = days_to_next_christmas()
-    out = case days do
+    case days do
       0 -> "No more sleeps — it's Christmas 😀🎄🎁"
       1 -> "The sleep 😴 before Christmas 🎄"
       _ -> "#{days} sleeps 😴 till Christmas 🎄"
     end
-    IO.puts(out)
   end
 
   defp days_to_next_christmas() do
