@@ -1,21 +1,27 @@
 # SleepsToChristmas
 
-**TODO: Add description**
+Assignment from Programming by Stealth #127 at
 
-## Installation
+https://pbs.bartificer.net/pbs127
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `sleeps_to_christmas` to your list of dependencies in `mix.exs`:
+This assignment was to be done in JavaScript with Node.js, but I am more
+interested in learning Elixir, so that's how I did it.
 
-```elixir
-def deps do
-  [
-    {:sleeps_to_christmas, "~> 0.1.0"}
-  ]
-end
-```
+## Problem to be Solved
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/sleeps_to_christmas](https://hexdocs.pm/sleeps_to_christmas).
+The problem to be solved is to count down the number of nights of sleep
+until Christmas.
 
+## Implementation
+
+I'm still learning my way through Elixir, so this is probably a bit brute
+forced compared to more the elegant examples I've seen. But I have to start
+somewhere.
+
+The process is simple:
+
+    Get the current date
+    Get Christmas date for current year
+    Add a year if Christmas is before the current date
+    Calculate days until Christmas
+    Output message for 0, 1, or more "sleeps" to Christmas
