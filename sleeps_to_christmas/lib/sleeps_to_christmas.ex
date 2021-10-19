@@ -36,6 +36,6 @@ defmodule SleepsToChristmas do
 
   defp local_date() do
     {erl_date, _erl_time} = :calendar.local_time()
-    Date.from_erl!(erl_date)
+    from_erl!(erl_date)
   end
 end
