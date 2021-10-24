@@ -16,6 +16,11 @@ defmodule SleepsToChristmas do
   """
   def sleeps do
     local_date()                  # Get the current date
+    |> sleeps()
+  end
+
+  def sleeps(date) do
+    date
     |> days_to_next_christmas()   # Calculate the number of days until Christmas
     |> phrase()                   # Generate phrase
   end
@@ -26,12 +31,19 @@ defmodule SleepsToChristmas do
 
   def days_to_next_christmas(date) do
     christmas = new!(date.year, 12, 25)
-    christmas = add_year_if_before(christmas, compare(christmas, date))
-    day_of_year(christmas) - day_of_year(date)
+    compare(date, christmas)
+    |> add_year_if_greater(christmas)
+    |> range(date)
+    |> Enum.count()
+    |> subtract(1)   # The range is inclusive on both ends, so -1 for difference
   end
 
-  defp add_year_if_before(date, :gt), do: date
-  defp add_year_if_before(date, _), do: new!(date.year + 1, date.month, date.day)
+  def subtract(value, quantity), do: value - quantity
+
+  def add_year_if_greater(:gt, date) do
+    new!(date.year + 1, date.month, date.day)
+  end
+  def add_year_if_greater(_, date), do: date
 
   defp local_date() do
     {erl_date, _erl_time} = :calendar.local_time()
