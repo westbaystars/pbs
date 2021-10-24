@@ -15,4 +15,8 @@ defmodule SleepsToChristmasTest do
     assert SleepsToChristmas.days_to_next_christmas(~D[2021-12-24]) === 1
   end
 
+  test "check for day after Christmas" do
+    assert SleepsToChristmas.days_to_next_christmas(~D[2021-12-26]) === 364
+  end
+
 end
