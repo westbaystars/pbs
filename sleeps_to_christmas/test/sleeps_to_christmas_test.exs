@@ -6,4 +6,13 @@ defmodule SleepsToChristmasTest do
     assert SleepsToChristmas.sleeps()
     |> String.match?(~r/Christmas/)
   end
+
+  test "check when date is Christmas" do
+    assert SleepsToChristmas.days_to_next_christmas(~D[2021-12-25]) === 0
+  end
+
+  test "check for Christmas eve" do
+    assert SleepsToChristmas.days_to_next_christmas(~D[2021-12-24]) === 1
+  end
+
 end
