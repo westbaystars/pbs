@@ -1,0 +1,2 @@
+#!/bin/bash
+mix run -e "SleepsToChristmas.sleeps(~D[$1]) |> IO.puts()"
