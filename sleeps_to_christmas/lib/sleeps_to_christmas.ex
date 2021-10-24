@@ -15,12 +15,8 @@ defmodule SleepsToChristmas do
 
   """
   def sleeps do
-    days = days_to_next_christmas()
-    case days do
-      0 -> "No more sleeps — it's Christmas 😀🎄🎁"
-      1 -> "The sleep 😴 before Christmas 🎄"
-      _ -> "#{days} sleeps 😴 till Christmas 🎄"
-    end
+    days_to_next_christmas()
+    |> phrase()
   end
 
   defp days_to_next_christmas() do
@@ -32,6 +28,10 @@ defmodule SleepsToChristmas do
     end
     day_of_year(christmas) - day_of_year(today)
   end
+
+  defp phrase(0), do: "No more sleeps — it's Christmas 😀🎄🎁"
+  defp phrase(1), do: "The sleep 😴 before Christmas 🎄"
+  defp phrase(days), do: "#{days} sleeps 😴 till Christmas 🎄"
 
   defp local_date() do
     {erl_date, _erl_time} = :calendar.local_time()
