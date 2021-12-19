@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.26.0">
+    <meta name="project" content="replicator v0.1.0">
+
+    <title>PBSReplicator — replicator v0.1.0</title>
+    <link rel="stylesheet" href="dist/elixir-b5076885a795c65e636c.css" />
+
+    <script src="dist/sidebar_items-7392654ea2.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/app-a404e1e870b77c874f9e.js"></script>
+
+
+  </head>
+  <body data-type="modules">
+    <script>
+
+      try {
+        if (localStorage.getItem('night-mode') === 'true') {
+          document.body.classList.add('night-mode');
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+<button class="sidebar-button sidebar-toggle">
+  <span class="icon-menu" title="Collapse/expand sidebar"></span>
+</button>
+
+<section class="sidebar">
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <span class="icon-search" aria-hidden="true" title="Submit search"></span>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <span class="icon-cross" aria-hidden="true" title="Cancel search"></span>
+    </button>
+    <label class="search-label">
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectDetails">
+      <a href="api-reference.html" class="sidebar-projectName" translate="no">
+replicator
+      </a>
+      <strong class="sidebar-projectVersion" translate="no">
+        v0.1.0
+      </strong>
+    </div>
+
+  </div>
+
+  <ul class="sidebar-listNav">
+    <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+
+      <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+  </ul>
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+<h1>
+  <span translate="no">PBSReplicator</span> 
+  <small class="app-vsn" translate="no">(replicator v0.1.0)</small>
+
+
+</h1>
+
+
+  <section id="moduledoc">
+<p>Why cook when you can use a replicator! Sadly this module can't
+provide a real replicator, but it can at least give you a simulated
+digital one. 🙂</p><h2 id="module-a-virtual-star-trek-style-replicator" class="section-heading">
+  <a href="#module-a-virtual-star-trek-style-replicator" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  A Virtual Star Trek-style Replicator
+</h2>
+<p>Replicators have a charge that gets exhausted by replicating food.
+Replicators can be recharged.</p><p>All replicators share a single menu which is accessible and updatable via
+functions.</p>
+  </section>
+
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <span class="icon-link" aria-hidden="true"></span>
+        <span class="sr-only">Link to this section</span>
+      </a>
+      Summary
+    </h1>
+
+  <div class="summary-types summary">
+    <h2>
+      <a href="#types">Types</a>
+    </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:t/0" translate="no">t()</a>
+
+        </div>
+
+      </div>
+
+  </div>
+
+  <div class="summary-functions summary">
+    <h2>
+      <a href="#functions">Functions</a>
+    </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#add_menu_item/2" translate="no">add_menu_item(replicator, arg)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Add a <a href="MenuItem.html"><code class="inline">MenuItem</code></a> to the replicator's menu.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#charge/2" translate="no">charge(_, _)</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#get_charge/1" translate="no">get_charge(replicator)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Get the replicator's current charge level.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#get_menu/1" translate="no">get_menu(replicator)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Get the menu of foods supported by the replicator.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#new/0" translate="no">new()</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Create a default-charged Replicator.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#new/1" translate="no">new(initial_charge)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Create a new Replicator charged to a given amount.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#recharge/2" translate="no">recharge(replicator, charge_amount)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Recharge the replicator's current charge level.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#replicate/2" translate="no">replicate(replicator, arg)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Make some food from the menu.</p></div>
+
+      </div>
+
+  </div>
+
+  </section>
+
+
+  <section id="types" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#types">
+        <span class="icon-link" aria-hidden="true"></span>
+        <span class="sr-only">Link to this section</span>
+      </a>
+Types
+    </h1>
+    <div class="types-list">
+<section class="detail" id="t:t/0">
+
+  <div class="detail-header">
+    <a href="#t:t/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">t()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">t() :: %PBSReplicator{charge: <a href="MenuItem.html#t:charge_amount/0">MenuItem.charge_amount</a>(), menu: Map.t()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <span class="icon-link" aria-hidden="true"></span>
+        <span class="sr-only">Link to this section</span>
+      </a>
+Functions
+    </h1>
+    <div class="functions-list">
+<section class="detail" id="add_menu_item/2">
+
+  <div class="detail-header">
+    <a href="#add_menu_item/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">add_menu_item(replicator, arg)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>Add a <a href="MenuItem.html"><code class="inline">MenuItem</code></a> to the replicator's menu.</p><h2 id="add_menu_item/2-parammeters" class="section-heading">
+  <a href="#add_menu_item/2-parammeters" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Parammeters:
+</h2>
+<ul><li>replicator - The replicator to recharge.</li><li>{name, icon, energy_cost} - A <a href="https://hexdocs.pm/elixir/Tuple.html"><code class="inline">Tuple</code></a> of the name, icon, and energy cost of the new item.</li></ul><h2 id="add_menu_item/2-sample" class="section-heading">
+  <a href="#add_menu_item/2-sample" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Sample:
+</h2>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="0937539747-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">rep</span><span class="p" data-group-id="0937539747-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">PBSReplicator</span><span class="o">.</span><span class="n">add_menu_item</span><span class="p" data-group-id="0937539747-2">(</span><span class="n">rep</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="0937539747-3">{</span><span class="ss">:tako</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;🐙&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p" data-group-id="0937539747-3">}</span><span class="p" data-group-id="0937539747-2">)</span><span class="w">
+</span><span class="p" data-group-id="0937539747-4">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w">
+ </span><span class="p" data-group-id="0937539747-5">%</span><span class="nc" data-group-id="0937539747-5">PBSReplicator</span><span class="p" data-group-id="0937539747-5">{</span><span class="w">
+   </span><span class="ss">charge</span><span class="p">:</span><span class="w"> </span><span class="mi">225</span><span class="p">,</span><span class="w">
+   </span><span class="ss">menu</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="0937539747-6">%{</span><span class="w">
+     </span><span class="ss">pancakes</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="0937539747-7">%</span><span class="nc" data-group-id="0937539747-7">MenuItem</span><span class="p" data-group-id="0937539747-7">{</span><span class="ss">energy_cost</span><span class="p">:</span><span class="w"> </span><span class="mi">11</span><span class="p">,</span><span class="w"> </span><span class="ss">icon</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;🥞&quot;</span><span class="p" data-group-id="0937539747-7">}</span><span class="p">,</span><span class="w">
+     </span><span class="ss">popcorn</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="0937539747-8">%</span><span class="nc" data-group-id="0937539747-8">MenuItem</span><span class="p" data-group-id="0937539747-8">{</span><span class="ss">energy_cost</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="ss">icon</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;🍿&quot;</span><span class="p" data-group-id="0937539747-8">}</span><span class="p">,</span><span class="w">
+     </span><span class="ss">tako</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="0937539747-9">%</span><span class="nc" data-group-id="0937539747-9">MenuItem</span><span class="p" data-group-id="0937539747-9">{</span><span class="ss">energy_cost</span><span class="p">:</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="ss">icon</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;🐙&quot;</span><span class="p" data-group-id="0937539747-9">}</span><span class="p">,</span><span class="w">
+     </span><span class="ss">waffles</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="0937539747-10">%</span><span class="nc" data-group-id="0937539747-10">MenuItem</span><span class="p" data-group-id="0937539747-10">{</span><span class="ss">energy_cost</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w"> </span><span class="ss">icon</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;🧇&quot;</span><span class="p" data-group-id="0937539747-10">}</span><span class="w">
+   </span><span class="p" data-group-id="0937539747-6">}</span><span class="w">
+ </span><span class="p" data-group-id="0937539747-5">}</span><span class="p" data-group-id="0937539747-4">}</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="charge/2">
+
+  <div class="detail-header">
+    <a href="#charge/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">charge(_, _)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="get_charge/1">
+
+  <div class="detail-header">
+    <a href="#get_charge/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_charge(replicator)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>Get the replicator's current charge level.</p><h2 id="get_charge/1-parammeters" class="section-heading">
+  <a href="#get_charge/1-parammeters" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Parammeters:
+</h2>
+<ul><li>replicator - The replicator to check.</li></ul><h2 id="get_charge/1-sample" class="section-heading">
+  <a href="#get_charge/1-sample" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Sample:
+</h2>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7245255484-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">charge</span><span class="p" data-group-id="7245255484-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">PBSReplicator</span><span class="o">.</span><span class="n">get_charge</span><span class="p" data-group-id="7245255484-2">(</span><span class="n">rep</span><span class="p" data-group-id="7245255484-2">)</span><span class="w">
+</span><span class="p" data-group-id="7245255484-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="mi">150</span><span class="p" data-group-id="7245255484-3">}</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="get_menu/1">
+
+  <div class="detail-header">
+    <a href="#get_menu/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_menu(replicator)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>Get the menu of foods supported by the replicator.</p><h2 id="get_menu/1-parammeters" class="section-heading">
+  <a href="#get_menu/1-parammeters" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Parammeters:
+</h2>
+<ul><li>replicator - The replicator to get the menu from.</li></ul><h2 id="get_menu/1-sample" class="section-heading">
+  <a href="#get_menu/1-sample" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Sample:
+</h2>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="9504887153-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">menu</span><span class="p" data-group-id="9504887153-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">PBSReplicator</span><span class="o">.</span><span class="n">get_menu</span><span class="p" data-group-id="9504887153-2">(</span><span class="n">rep</span><span class="p" data-group-id="9504887153-2">)</span><span class="w">
+</span><span class="p" data-group-id="9504887153-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w">
+ </span><span class="p" data-group-id="9504887153-4">%{</span><span class="w">
+   </span><span class="ss">pancakes</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9504887153-5">%</span><span class="nc" data-group-id="9504887153-5">MenuItem</span><span class="p" data-group-id="9504887153-5">{</span><span class="ss">energy_cost</span><span class="p">:</span><span class="w"> </span><span class="mi">11</span><span class="p">,</span><span class="w"> </span><span class="ss">icon</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;🥞&quot;</span><span class="p" data-group-id="9504887153-5">}</span><span class="p">,</span><span class="w">
+   </span><span class="ss">popcorn</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9504887153-6">%</span><span class="nc" data-group-id="9504887153-6">MenuItem</span><span class="p" data-group-id="9504887153-6">{</span><span class="ss">energy_cost</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="ss">icon</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;🍿&quot;</span><span class="p" data-group-id="9504887153-6">}</span><span class="p">,</span><span class="w">
+   </span><span class="ss">waffles</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9504887153-7">%</span><span class="nc" data-group-id="9504887153-7">MenuItem</span><span class="p" data-group-id="9504887153-7">{</span><span class="ss">energy_cost</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w"> </span><span class="ss">icon</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;🧇&quot;</span><span class="p" data-group-id="9504887153-7">}</span><span class="w">
+ </span><span class="p" data-group-id="9504887153-4">}</span><span class="p" data-group-id="9504887153-3">}</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="new/0">
+
+  <div class="detail-header">
+    <a href="#new/0" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">new()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">new() :: {:ok, Map.t()}</pre>
+
+      </div>
+
+<p>Create a default-charged Replicator.</p><h2 id="new/0-sample" class="section-heading">
+  <a href="#new/0-sample" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Sample:
+</h2>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="4166802265-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">rep</span><span class="p" data-group-id="4166802265-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">PBSReplicator</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="4166802265-2">(</span><span class="p" data-group-id="4166802265-2">)</span><span class="w">
+</span><span class="p" data-group-id="4166802265-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w">
+ </span><span class="p" data-group-id="4166802265-4">%</span><span class="nc" data-group-id="4166802265-4">PBSReplicator</span><span class="p" data-group-id="4166802265-4">{</span><span class="w">
+   </span><span class="ss">charge</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+   </span><span class="ss">menu</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4166802265-5">%{</span><span class="w">
+     </span><span class="ss">pancakes</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4166802265-6">%</span><span class="nc" data-group-id="4166802265-6">MenuItem</span><span class="p" data-group-id="4166802265-6">{</span><span class="ss">energy_cost</span><span class="p">:</span><span class="w"> </span><span class="mi">11</span><span class="p">,</span><span class="w"> </span><span class="ss">icon</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;🥞&quot;</span><span class="p" data-group-id="4166802265-6">}</span><span class="p">,</span><span class="w">
+     </span><span class="ss">popcorn</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4166802265-7">%</span><span class="nc" data-group-id="4166802265-7">MenuItem</span><span class="p" data-group-id="4166802265-7">{</span><span class="ss">energy_cost</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="ss">icon</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;🍿&quot;</span><span class="p" data-group-id="4166802265-7">}</span><span class="p">,</span><span class="w">
+     </span><span class="ss">waffles</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4166802265-8">%</span><span class="nc" data-group-id="4166802265-8">MenuItem</span><span class="p" data-group-id="4166802265-8">{</span><span class="ss">energy_cost</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w"> </span><span class="ss">icon</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;🧇&quot;</span><span class="p" data-group-id="4166802265-8">}</span><span class="w">
+   </span><span class="p" data-group-id="4166802265-5">}</span><span class="w">
+ </span><span class="p" data-group-id="4166802265-4">}</span><span class="p" data-group-id="4166802265-3">}</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="new/1">
+
+  <div class="detail-header">
+    <a href="#new/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">new(initial_charge)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">new(<a href="MenuItem.html#t:charge_amount/0">MenuItem.charge_amount</a>()) :: {<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">atom</a>(), Map.t()}</pre>
+
+      </div>
+
+<p>Create a new Replicator charged to a given amount.</p><p>Replicators default to an initial charge of 100, but an alternative
+initial charge may be passed.</p><h2 id="new/1-parammeters" class="section-heading">
+  <a href="#new/1-parammeters" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Parammeters:
+</h2>
+<ul><li>initial_charge (default: 100) - The replicator's initial charge.</li></ul><h2 id="new/1-sample" class="section-heading">
+  <a href="#new/1-sample" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Sample:
+</h2>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="7633961453-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">rep</span><span class="p" data-group-id="7633961453-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">PBSReplicator</span><span class="o">.</span><span class="n">new</span><span class="p" data-group-id="7633961453-2">(</span><span class="mi">150</span><span class="p" data-group-id="7633961453-2">)</span><span class="w">
+</span><span class="p" data-group-id="7633961453-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w">
+ </span><span class="p" data-group-id="7633961453-4">%</span><span class="nc" data-group-id="7633961453-4">PBSReplicator</span><span class="p" data-group-id="7633961453-4">{</span><span class="w">
+   </span><span class="ss">charge</span><span class="p">:</span><span class="w"> </span><span class="mi">150</span><span class="p">,</span><span class="w">
+   </span><span class="ss">menu</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7633961453-5">%{</span><span class="w">
+     </span><span class="ss">pancakes</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7633961453-6">%</span><span class="nc" data-group-id="7633961453-6">MenuItem</span><span class="p" data-group-id="7633961453-6">{</span><span class="ss">energy_cost</span><span class="p">:</span><span class="w"> </span><span class="mi">11</span><span class="p">,</span><span class="w"> </span><span class="ss">icon</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;🥞&quot;</span><span class="p" data-group-id="7633961453-6">}</span><span class="p">,</span><span class="w">
+     </span><span class="ss">popcorn</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7633961453-7">%</span><span class="nc" data-group-id="7633961453-7">MenuItem</span><span class="p" data-group-id="7633961453-7">{</span><span class="ss">energy_cost</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="ss">icon</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;🍿&quot;</span><span class="p" data-group-id="7633961453-7">}</span><span class="p">,</span><span class="w">
+     </span><span class="ss">waffles</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7633961453-8">%</span><span class="nc" data-group-id="7633961453-8">MenuItem</span><span class="p" data-group-id="7633961453-8">{</span><span class="ss">energy_cost</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w"> </span><span class="ss">icon</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;🧇&quot;</span><span class="p" data-group-id="7633961453-8">}</span><span class="w">
+   </span><span class="p" data-group-id="7633961453-5">}</span><span class="w">
+ </span><span class="p" data-group-id="7633961453-4">}</span><span class="p" data-group-id="7633961453-3">}</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="recharge/2">
+
+  <div class="detail-header">
+    <a href="#recharge/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">recharge(replicator, charge_amount)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>Recharge the replicator's current charge level.</p><h2 id="recharge/2-parammeters" class="section-heading">
+  <a href="#recharge/2-parammeters" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Parammeters:
+</h2>
+<ul><li>replicator - The replicator to recharge.</li><li>charge_amount - The amount to charge.</li></ul><h2 id="recharge/2-sample" class="section-heading">
+  <a href="#recharge/2-sample" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Sample:
+</h2>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="0897175826-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">rep</span><span class="p" data-group-id="0897175826-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">PBSReplicator</span><span class="o">.</span><span class="n">recharge</span><span class="p" data-group-id="0897175826-2">(</span><span class="n">rep</span><span class="p">,</span><span class="w"> </span><span class="mi">75</span><span class="p" data-group-id="0897175826-2">)</span><span class="w">
+</span><span class="p" data-group-id="0897175826-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w">
+ </span><span class="p" data-group-id="0897175826-4">%</span><span class="nc" data-group-id="0897175826-4">PBSReplicator</span><span class="p" data-group-id="0897175826-4">{</span><span class="w">
+   </span><span class="ss">charge</span><span class="p">:</span><span class="w"> </span><span class="mi">225</span><span class="p">,</span><span class="w">
+   </span><span class="ss">menu</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="0897175826-5">%{</span><span class="w">
+     </span><span class="ss">pancakes</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="0897175826-6">%</span><span class="nc" data-group-id="0897175826-6">MenuItem</span><span class="p" data-group-id="0897175826-6">{</span><span class="ss">energy_cost</span><span class="p">:</span><span class="w"> </span><span class="mi">11</span><span class="p">,</span><span class="w"> </span><span class="ss">icon</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;🥞&quot;</span><span class="p" data-group-id="0897175826-6">}</span><span class="p">,</span><span class="w">
+     </span><span class="ss">popcorn</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="0897175826-7">%</span><span class="nc" data-group-id="0897175826-7">MenuItem</span><span class="p" data-group-id="0897175826-7">{</span><span class="ss">energy_cost</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="ss">icon</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;🍿&quot;</span><span class="p" data-group-id="0897175826-7">}</span><span class="p">,</span><span class="w">
+     </span><span class="ss">waffles</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="0897175826-8">%</span><span class="nc" data-group-id="0897175826-8">MenuItem</span><span class="p" data-group-id="0897175826-8">{</span><span class="ss">energy_cost</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w"> </span><span class="ss">icon</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;🧇&quot;</span><span class="p" data-group-id="0897175826-8">}</span><span class="w">
+   </span><span class="p" data-group-id="0897175826-5">}</span><span class="w">
+ </span><span class="p" data-group-id="0897175826-4">}</span><span class="p" data-group-id="0897175826-3">}</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="replicate/2">
+
+  <div class="detail-header">
+    <a href="#replicate/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">replicate(replicator, arg)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>Make some food from the menu.</p><h2 id="replicate/2-parammeters" class="section-heading">
+  <a href="#replicate/2-parammeters" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Parammeters:
+</h2>
+<ul><li>replicator - The replicator to use.</li><li>{name, count} - A <a href="https://hexdocs.pm/elixir/Tuple.html"><code class="inline">Tuple</code></a> of the name of the item to make and the number of items (default: 1).</li></ul><h2 id="replicate/2-returns" class="section-heading">
+  <a href="#replicate/2-returns" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Returns
+</h2>
+<p>Returns the Tuple {:ok, replicator, food} if successful, {:error, reason} if fails.</p><h2 id="replicate/2-sample" class="section-heading">
+  <a href="#replicate/2-sample" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Sample:
+</h2>
+<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="p" data-group-id="3610724562-1">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">rep</span><span class="p">,</span><span class="w"> </span><span class="n">food</span><span class="p" data-group-id="3610724562-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">PBSReplicator</span><span class="o">.</span><span class="n">replicate</span><span class="p" data-group-id="3610724562-2">(</span><span class="n">rep</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3610724562-3">{</span><span class="ss">:tako</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="3610724562-3">}</span><span class="p" data-group-id="3610724562-2">)</span><span class="w">
+</span><span class="p" data-group-id="3610724562-4">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3610724562-5">%</span><span class="nc" data-group-id="3610724562-5">PBSReplicator</span><span class="p" data-group-id="3610724562-5">{</span><span class="ss">charge</span><span class="p">:</span><span class="w"> </span><span class="mi">198</span><span class="p">,</span><span class="w"> </span><span class="n">...</span><span class="p">]</span><span class="p" data-group-id="3610724562-5">}</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;🐙🐙🐙&quot;</span><span class="p" data-group-id="3610724562-4">}</span></code></pre>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+      <footer class="footer">
+
+        <p>
+          <span class="line">
+            Built using
+            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.26.0) for the
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>.
+          </span>
+          <span class="line">
+            Designed by
+            <a href="https://twitter.com/dignifiedquire" target="_blank" rel="noopener" title="@dignifiedquire" translate="no">Friedel Ziegelmayer</a>.
+          </span>
+        </p>
+        <p>
+
+            <a href="api-reference.html" title="API reference" class="line footer-button">API Reference</a>
+
+          <button class="line footer-button display-shortcuts-help">
+            Display keyboard shortcuts
+          </button>
+          <button class="line footer-button display-quick-switch">
+            Go to a HexDocs package
+          </button>
+          <button class="line footer-button display-settings">
+            Settings
+          </button>
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>
